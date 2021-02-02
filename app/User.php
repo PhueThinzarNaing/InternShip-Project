@@ -51,8 +51,5 @@ class User extends Authenticatable
         return $this->hasMany('App\Buy','customer_id');
     }
 
-    public function sendPasswordResetNotification($token)
-{
-    $this->notify(new ResetPasswordNotification($token));
-}
+   
 }

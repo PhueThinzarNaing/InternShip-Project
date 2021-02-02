@@ -24,8 +24,10 @@ class BuyItemController extends Controller
         {
             $buyitem_lists = Buy::get();
             return view('manager.buy_items.index',['buyitem_lists'=>$buyitem_lists]);
-        }else{
-        $id = Auth::id();
+        }
+        
+        else if(Auth::user()->role == 'manager')
+        { $id = Auth::id();
       
         $commodity_exchanges = CommodityExchange::where('user_id',$id)->get();
         foreach( $commodity_exchanges as  $commodity_exchange)
@@ -34,6 +36,12 @@ class BuyItemController extends Controller
            $buyitem_lists = Buy::where('commodity_exchanges_id',$ce)->get();
               return view('manager.buy_items.index',['buyitem_lists'=>$buyitem_lists]);
             }
+         }
+         
+         else{
+            $id = Auth::id();
+            $buyitem_lists = Buy::where('customer_id',$id)->get();
+            return view('userAccount.buylist',['buyitem_lists'=>$buyitem_lists]);
          }
        
     
